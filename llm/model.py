@@ -9,9 +9,6 @@ load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), "../.env"))
 # Get API key
 api_key = os.getenv("GEMINI_API_KEY")
 
-# Debug check
-print("API KEY:", api_key)
-
 # Fail fast if missing
 if not api_key:
     raise ValueError("❌ API key not found. Check your .env file")
