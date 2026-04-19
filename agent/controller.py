@@ -9,8 +9,6 @@ def detect_intent(query: str) -> str:
         return "HINT"
     elif "approach" in query_lower or "explain" in query_lower or "how to solve" in query_lower or "algorithm" in query_lower:
         return "APPROACH"
-    elif "code" in query_lower or "solution" in query_lower:
-        return "CODE"
     else:
         return "GENERAL"
 
