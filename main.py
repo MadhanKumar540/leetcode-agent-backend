@@ -34,6 +34,8 @@ class AskRequest(BaseModel):
     problem_description: str
     user_query: str
     history: List[Dict[str, str]] = []
+    user_level: str = "beginner"
+    session_id: str = "default"
 
 @app.post("/ask")
 def ask_agent(request: AskRequest):
@@ -41,7 +43,9 @@ def ask_agent(request: AskRequest):
         problem_title=request.problem_title,
         problem_description=request.problem_description,
         user_query=request.user_query,
-        history=request.history
+        history=request.history,
+        user_level=request.user_level,
+        session_id=request.session_id
     )
     return response
 

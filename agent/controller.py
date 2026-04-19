@@ -1,5 +1,6 @@
 from agent.prompt import build_prompt
 from llm.model import generate_response
+from agent.user_profile import update_and_get_level
 
 def detect_intent(query: str) -> str:
     query_lower = query.lower()
@@ -12,14 +13,18 @@ def detect_intent(query: str) -> str:
     else:
         return "GENERAL"
 
-def process_query(problem_title: str, problem_description: str, user_query: str, history: list) -> dict:
+def process_query(problem_title: str, problem_description: str, user_query: str, history: list, user_level: str = "beginner", session_id: str = "default") -> dict:
     intent = detect_intent(user_query)
+    
+    # Calculate the dynamically adjusted user level
+    dynamic_level = update_and_get_level(session_id, user_level, user_query)
     
     prompt = build_prompt(
         problem_title=problem_title,
         problem_description=problem_description,
         query=user_query,
-        intent=intent
+        intent=intent,
+        level=dynamic_level
     )
     
     # Optional: pass history to the LLM context
@@ -27,5 +32,6 @@ def process_query(problem_title: str, problem_description: str, user_query: str,
     
     return {
         "type": intent.lower(),
-        "content": generated_text
+        "content": generated_text,
+        "detected_level": dynamic_level
     }
