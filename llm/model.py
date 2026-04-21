@@ -45,7 +45,7 @@ def generate_response(prompt: str, history=None) -> str:
             print(f"Trying fallback model gemini-1.5-pro due to: {str(e)}")
             try:
                 response = client.models.generate_content(
-                    model="gemini-1.5-pro",
+                    model="gemini-1.5-flash",
                     contents=prompt,
                 )
                 return response.text
